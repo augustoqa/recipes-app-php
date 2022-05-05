@@ -13,7 +13,12 @@
 		<tr>
 			<td><?= $recipe['id'] ?></td>
 			<td><?= htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') ?></td>
-			<td></td>
+			<td>
+				<form method="post" action="deleterecipe.php">
+					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
+					<button type="submit">Delete</button>
+				</form>
+			</td>
 		</tr>
 		<?php endforeach ?>
 	</tbody>
