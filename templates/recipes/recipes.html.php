@@ -5,6 +5,7 @@
 		<tr>
 			<th>Id</th>
 			<th>Title</th>
+			<th>Class Recipe</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -13,6 +14,7 @@
 		<tr>
 			<td><?= $recipe['id'] ?></td>
 			<td><?= htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') ?></td>
+			<td><?= htmlspecialchars($recipe['description'], ENT_QUOTES, 'UTF-8') ?></td>
 			<td>
 				<form method="post" action="deleterecipe.php">
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">

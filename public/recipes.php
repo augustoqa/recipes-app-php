@@ -3,7 +3,11 @@
 try {
 	$pdo = new PDO('mysql:host=localhost;dbname=recipes;utf-8', 'root', 'admin');
 
-	$stmt = $pdo->prepare("SELECT * FROM `recipes`");
+	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
+				FROM `recipes` INNER JOIN `recipe_classes`
+					ON `recipes`.`recipe_classes_id` = `recipe_classes`.`id`
+			ORDER BY `recipes`.`id`';
+	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
 	$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
