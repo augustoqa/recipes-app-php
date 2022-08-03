@@ -1,7 +1,7 @@
 <?php
 
 try {
-	$pdo = new PDO('mysql:host=localhost;dbname=recipes;charset=utf8mb4', 'root', 'admin');
+	include __DIR__ . '/../includes/DatabaseConnection.php';
 	$stmt = $pdo->prepare("DELETE FROM `recipes` WHERE `id` = :id");
 	$stmt->bindValue(':id', $_POST['id']);
 	$stmt->execute();

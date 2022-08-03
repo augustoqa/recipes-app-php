@@ -1,7 +1,7 @@
 <?php
 
 try {
-	$pdo = new PDO('mysql:host=localhost;dbname=recipes;utf-8', 'root', 'admin');
+	include __DIR__ . '/../includes/DatabaseConnection.php';
 
 	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
 				FROM `recipes` INNER JOIN `recipe_classes`

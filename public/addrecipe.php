@@ -2,7 +2,7 @@
 
 if (isset($_POST['title'])) {
 	try {
-		$pdo = new PDO('mysql:host=localhost;dbname=recipes;charset=utf8mb4', 'root', 'admin');
+		include __DIR__ . '/../includes/DatabaseConnection.php';
 
 		$stmt = $pdo->prepare('INSERT INTO `recipes` SET `title` = :title');
 		$stmt->bindValue(':title', $_POST['title']);
