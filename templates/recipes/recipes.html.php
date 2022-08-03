@@ -1,4 +1,5 @@
 <a href="addrecipe.php">Add a new Recipe</a>
+<p><?= $totalRecipes ?> total recipes in the database.</p>
 <hr />
 <table border="1">
 	<thead>

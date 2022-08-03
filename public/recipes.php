@@ -2,6 +2,7 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
+	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
 				FROM `recipes` INNER JOIN `recipe_classes`
@@ -10,6 +11,8 @@ try {
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
 	$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	$totalRecipes = totalRecipes($pdo);
 
 	$title = 'List of Recipes';
 
