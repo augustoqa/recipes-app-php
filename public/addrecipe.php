@@ -3,10 +3,9 @@
 if (isset($_POST['title'])) {
 	try {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
+		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		$stmt = $pdo->prepare('INSERT INTO `recipes` SET `title` = :title');
-		$stmt->bindValue(':title', $_POST['title']);
-		$stmt->execute();
+		addRecipe($pdo, $_POST['title'], $_POST['preparation'], $_POST['notes'], 1);
 
 		header('location: recipes.php');
 	} catch (PDOException $e) {
