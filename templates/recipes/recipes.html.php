@@ -21,6 +21,7 @@
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
 					<button type="submit">Delete</button>
 				</form>
+				<a href="editrecipe.php?id=<?= $recipe['id'] ?>">Edit</a>
 			</td>
 		</tr>
 		<?php endforeach ?>

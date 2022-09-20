@@ -44,3 +44,23 @@ function addRecipe($database, $title, $preparation, $notes, $recipeClassId)
 
 	query($database, $sql, $parameters);
 }
+
+function editRecipe($database, $recipeId, $title, $preparation, $notes, $recipeClassId)
+{
+	$sql = 'UPDATE `recipes` SET 
+		`title` = :title,
+		`preparation` = :preparation,
+		`notes` = :notes,
+		`recipe_classes_id` = :recipeClassesId 
+		WHERE `id` = :recipeId';
+
+	$parameters = [
+		':title' => $title,
+		':preparation' => $preparation,
+		':notes' => $notes,
+		':recipeClassesId' => $recipeClassId,
+		':recipeId' => $recipeId,
+	];
+
+	query($database, $sql, $parameters);
+}
