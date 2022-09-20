@@ -9,7 +9,7 @@ try {
 
 		header('location: recipes.php') ;
 	} else {
-		$recipe = getRecipe($pdo, $_GET['id']);
+		$recipe = getRecipe($pdo, $_POST['id']);
 
 		$title = 'Edit Recipe';
 

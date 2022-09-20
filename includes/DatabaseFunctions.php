@@ -27,6 +27,17 @@ function getRecipe($database, $id)
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function getAllRecipes($database)
+{
+	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
+				FROM `recipes` INNER JOIN `recipe_classes`
+					ON `recipes`.`recipe_classes_id` = `recipe_classes`.`id`
+			ORDER BY `recipes`.`id`';
+
+	$stmt = query($database, $sql);
+	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function addRecipe($database, $title, $preparation, $notes, $recipeClassId)
 {
 	$sql = 'INSERT INTO `recipes` SET 
@@ -63,4 +74,9 @@ function editRecipe($database, $recipeId, $title, $preparation, $notes, $recipeC
 	];
 
 	query($database, $sql, $parameters);
+}
+
+function deleteRecipe($database, $id)
+{
+	query($database, 'DELETE FROM `recipes` WHERE `id` = :id', [':id' => $id]);
 }

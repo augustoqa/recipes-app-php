@@ -2,9 +2,9 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	$stmt = $pdo->prepare("DELETE FROM `recipes` WHERE `id` = :id");
-	$stmt->bindValue(':id', $_POST['id']);
-	$stmt->execute();
+	include __DIR__ . '/../includes/DatabaseFunctions.php';
+
+	deleteRecipe($pdo, $_POST['id']);
 
 	header('location: recipes.php');
 } catch (PDOException $e) {

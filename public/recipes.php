@@ -4,13 +4,7 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
-				FROM `recipes` INNER JOIN `recipe_classes`
-					ON `recipes`.`recipe_classes_id` = `recipe_classes`.`id`
-			ORDER BY `recipes`.`id`';
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$recipes = getAllRecipes($pdo);
 
 	$totalRecipes = totalRecipes($pdo);
 
