@@ -5,7 +5,12 @@ if (isset($_POST['title'])) {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
 		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		addRecipe($pdo, $_POST['title'], $_POST['preparation'], $_POST['notes'], 1);
+		addRecipe($pdo, [
+			'title'            	 => $_POST['title'],
+			'preparation'      	 => $_POST['preparation'],
+			'notes'            	 => $_POST['notes'],
+			'recipe_classes_id'	 => 1,
+		]);
 
 		header('location: recipes.php');
 	} catch (PDOException $e) {

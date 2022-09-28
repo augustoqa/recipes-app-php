@@ -38,45 +38,40 @@ function getAllRecipes($database)
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function addRecipe($database, $title, $preparation, $notes, $recipeClassId)
+function addRecipe($database, array $fields)
 {
-	$sql = 'INSERT INTO `recipes` SET 
-		`title` = :title, 
-		`preparation` = :preparation, 
-		`notes` = :notes, 
-		`recipe_classes_id` = :recipeClassesId';
-		
-	$parameters = [
-		':title' => $title,
-		':preparation' => $preparation,
-		':notes' => $notes,
-		':recipeClassesId' => $recipeClassId,
-	];
+	$sql = sprintf('INSERT INTO `recipes` SET %s', getSqlPlaceholder($fields));
 
-	query($database, $sql, $parameters);
+	query($database, $sql, getParameters($fields));
 }
 
-function editRecipe($database, $recipeId, $title, $preparation, $notes, $recipeClassId)
+function editRecipe($database, array $fields)
 {
-	$sql = 'UPDATE `recipes` SET 
-		`title` = :title,
-		`preparation` = :preparation,
-		`notes` = :notes,
-		`recipe_classes_id` = :recipeClassesId 
-		WHERE `id` = :recipeId';
+	$sql = sprintf('UPDATE `recipes` SET %s WHERE `id` = :id', getSqlPlaceholder($fields));
 
-	$parameters = [
-		':title' => $title,
-		':preparation' => $preparation,
-		':notes' => $notes,
-		':recipeClassesId' => $recipeClassId,
-		':recipeId' => $recipeId,
-	];
-
-	query($database, $sql, $parameters);
+	query($database, $sql, getParameters($fields));
 }
 
 function deleteRecipe($database, $id)
 {
 	query($database, 'DELETE FROM `recipes` WHERE `id` = :id', [':id' => $id]);
+}
+
+function getSqlPlaceholder($fields): string
+{
+	$sql = '';
+	foreach (array_keys($fields) as $field) {
+		$sql .= "`${field}` = :${field},";
+	}
+	return rtrim($sql, ',');
+}
+
+function getParameters($fields): array
+{
+	$parameters = [];
+	foreach($fields as $field => $value) {
+		$parameters[":{$field}"] = $value;
+	}
+
+	return $parameters;
 }

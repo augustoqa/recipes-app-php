@@ -5,7 +5,12 @@ try {
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 	if (isset($_POST['title'])) {
-		editRecipe($pdo, $_POST['recipeId'], $_POST['title'], $_POST['preparation'], $_POST['notes'], 1);
+		editRecipe($pdo, [
+			'id'          => $_POST['recipeId'],
+			'title'       => $_POST['title'],
+			'preparation' => $_POST['preparation'],
+			'notes'       => $_POST['notes'],
+		]);
 
 		header('location: recipes.php') ;
 	} else {
