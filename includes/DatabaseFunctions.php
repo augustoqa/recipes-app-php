@@ -8,68 +8,69 @@ function query($database, $sql, $parameters = [])
 	return $stmt;
 }
 
-function totalRecipes($database)
+function total($database, $table)
 {
-	$stmt = query($database, 'SELECT COUNT(*) AS `total` FROM `recipes`');
+	$stmt = query($database, "SELECT COUNT(*) AS `total` FROM `{$table}`");
 	$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	return $row['total'];
 }
 
-function getRecipe($database, $id)
+function find($database, $table, $field, $value)
 {
 	$stmt = query(
 		$database, 
-		'SELECT * FROM `recipes` WHERE id = :id',
-		[':id' => $id]
+		"SELECT * FROM `{$table}` WHERE `{$field}` = :field",
+		[':field' => $value]
 	);
 
-	return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-function getAllRecipes($database)
-{
-	$sql = 'SELECT `recipes`.`id`, `recipes`.`title`, `recipe_classes`.`description`
-				FROM `recipes` INNER JOIN `recipe_classes`
-					ON `recipes`.`recipe_classes_id` = `recipe_classes`.`id`
-			ORDER BY `recipes`.`id`';
-
-	$stmt = query($database, $sql);
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function addRecipe($database, array $fields)
+function findAll($database, $table)
 {
-	$sql = sprintf('INSERT INTO `recipes` SET %s', getSqlPlaceholder($fields));
-
-	query($database, $sql, getParameters($fields));
+	$stmt = query($database, "SELECT * FROM `{$table}`");
+	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function editRecipe($database, array $fields)
+function insert($database, $table, array $values)
 {
-	$sql = sprintf('UPDATE `recipes` SET %s WHERE `id` = :id', getSqlPlaceholder($fields));
+	$sql = sprintf("INSERT INTO `{$table}` SET %s", getSqlPlaceholder($values));
 
-	query($database, $sql, getParameters($fields));
+	query($database, $sql, getParameters($values));
 }
 
-function deleteRecipe($database, $id)
+function update($database, $table, $primaryKey, array $values)
 {
-	query($database, 'DELETE FROM `recipes` WHERE `id` = :id', [':id' => $id]);
+	$sql = sprintf(
+		"UPDATE `{$table}` SET %s WHERE `{$primaryKey}` = :primaryKey", 
+		getSqlPlaceholder($values)
+	);
+
+    $parameters = getParameters($values);
+    $parameters[':primaryKey'] = $values[$primaryKey];
+
+	query($database, $sql, $parameters);
 }
 
-function getSqlPlaceholder($fields): string
+function delete($database, $table, $primaryKey, $id)
+{
+	query($database, "DELETE FROM `{$table}` WHERE `{$primaryKey}` = :primaryKey", [':primaryKey' => $id]);
+}
+
+function getSqlPlaceholder($values): string
 {
 	$sql = '';
-	foreach (array_keys($fields) as $field) {
+	foreach (array_keys($values) as $field) {
 		$sql .= "`${field}` = :${field},";
 	}
 	return rtrim($sql, ',');
 }
 
-function getParameters($fields): array
+function getParameters($values): array
 {
 	$parameters = [];
-	foreach($fields as $field => $value) {
+	foreach($values as $field => $value) {
 		$parameters[":{$field}"] = $value;
 	}
 

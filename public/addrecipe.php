@@ -5,7 +5,7 @@ if (isset($_POST['title'])) {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
 		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		addRecipe($pdo, [
+		insert($pdo, 'recipes', [
 			'title'            	 => $_POST['title'],
 			'preparation'      	 => $_POST['preparation'],
 			'notes'            	 => $_POST['notes'],

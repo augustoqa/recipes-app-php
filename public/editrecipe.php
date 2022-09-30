@@ -5,7 +5,7 @@ try {
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 	if (isset($_POST['title'])) {
-		editRecipe($pdo, [
+		update($pdo, 'recipes', 'id', [
 			'id'          => $_POST['recipeId'],
 			'title'       => $_POST['title'],
 			'preparation' => $_POST['preparation'],
@@ -14,7 +14,7 @@ try {
 
 		header('location: recipes.php') ;
 	} else {
-		$recipe = getRecipe($pdo, $_POST['id']);
+		$recipe = find($pdo, 'recipes', 'id', $_POST['id'])[0];
 
 		$title = 'Edit Recipe';
 
