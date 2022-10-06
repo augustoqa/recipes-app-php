@@ -4,14 +4,10 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-	if (isset($_POST['title'])) {
-		save($pdo, 'recipes', 'id', [
-			'id'                => $_POST['recipeId'],
-			'title'             => $_POST['title'],
-			'preparation'       => $_POST['preparation'],
-			'notes'             => $_POST['notes'],
-			'recipe_classes_id' => 1,
-		]);
+	if (isset($_POST['recipe'])) {
+		$recipe = $_POST['recipe'];
+		$recipe['recipe_classes_id'] = 1;
+		save($pdo, 'recipes', 'id', $recipe);
 
 		header('location: recipes.php') ;
 	} else {
