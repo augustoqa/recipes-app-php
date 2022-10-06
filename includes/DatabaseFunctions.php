@@ -33,6 +33,19 @@ function findAll($database, $table)
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function save($database, $table, $primaryKey, array $values)		
+{
+	try {
+		if (empty($values[$primaryKey])) {
+			unset($values[$primaryKey]);
+		}
+
+		insert($database, $table, $values);
+	} catch (PDOException $e) {
+		update($database, $table, $primaryKey, $values);
+	}
+}
+
 function insert($database, $table, array $values)
 {
 	$sql = sprintf("INSERT INTO `{$table}` SET %s", getSqlPlaceholder($values));

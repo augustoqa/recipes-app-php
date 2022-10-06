@@ -5,18 +5,22 @@ try {
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 	if (isset($_POST['title'])) {
-		update($pdo, 'recipes', 'id', [
-			'id'          => $_POST['recipeId'],
-			'title'       => $_POST['title'],
-			'preparation' => $_POST['preparation'],
-			'notes'       => $_POST['notes'],
+		save($pdo, 'recipes', 'id', [
+			'id'                => $_POST['recipeId'],
+			'title'             => $_POST['title'],
+			'preparation'       => $_POST['preparation'],
+			'notes'             => $_POST['notes'],
+			'recipe_classes_id' => 1,
 		]);
 
 		header('location: recipes.php') ;
 	} else {
-		$recipe = find($pdo, 'recipes', 'id', $_POST['id'])[0];
+		$title = 'Add Recipe';
 
-		$title = 'Edit Recipe';
+		if (isset($_POST['id'])) {
+			$recipe = find($pdo, 'recipes', 'id', $_POST['id'])[0];
+			$title = 'Edit Recipe';
+		}
 
 		ob_start();
 
