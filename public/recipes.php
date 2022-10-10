@@ -2,13 +2,16 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
 
-	$rows = findAll($pdo, 'recipes');
+	$recipesTable = new DatabaseTable($pdo, 'recipes');
+	$recipeClassesTable = new DatabaseTable($pdo, 'recipe_classes');
+
+	$rows = $recipesTable->findAll();
 
     $recipes = [];
     foreach ($rows as $row) {
-        $recipe_class = find($pdo, 'recipe_classes', 'id', $row['recipe_classes_id'])[0];
+        $recipe_class = $recipeClassesTable->find('id', $row['recipe_classes_id'])[0];
 
         $recipes[] = [
 			'id'          => $row['id'],
@@ -17,7 +20,7 @@ try {
         ];
     }
 
-	$totalRecipes = total($pdo, 'recipes');
+	$totalRecipes = $recipesTable->total();
 
 	$title = 'List of Recipes';
 

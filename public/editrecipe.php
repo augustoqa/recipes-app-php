@@ -2,19 +2,21 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
+
+	$recipesTable = new DatabaseTable($pdo, 'recipes');
 
 	if (isset($_POST['recipe'])) {
 		$recipe = $_POST['recipe'];
 		$recipe['recipe_classes_id'] = 1;
-		save($pdo, 'recipes', 'id', $recipe);
+		$recipesTable->save($recipe);
 
 		header('location: recipes.php') ;
 	} else {
 		$title = 'Add Recipe';
 
 		if (isset($_POST['id'])) {
-			$recipe = find($pdo, 'recipes', 'id', $_POST['id'])[0];
+			$recipe = $recipesTable->find('id', $_POST['id'])[0];
 			$title = 'Edit Recipe';
 		}
 

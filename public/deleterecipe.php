@@ -2,9 +2,10 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
 
-	delete($pdo, 'recipes', 'id', $_POST['id']);
+	$recipesTable = new DatabaseTable($pdo, 'recipes');
+	$recipesTable->delete($_POST['id']);
 
 	header('location: recipes.php');
 } catch (PDOException $e) {
