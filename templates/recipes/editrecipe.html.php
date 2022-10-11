@@ -1,4 +1,4 @@
-<form action="" method="POST">
+<form action="index.php?action=edit" method="POST">
 	<input type="hidden" name="recipe[id]" value="<?= $recipe['id'] ?? '' ?>">
 	<div>
 		<label for="title">Title</label>

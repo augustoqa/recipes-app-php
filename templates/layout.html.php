@@ -6,6 +6,12 @@
 	<title><?= $title ?></title>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="index.php?action=list">Recipes List</a></li>
+			<li><a href="index.php?action=edit">Add a new Recipe</a></li>
+		</ul>
+	</nav>
 	<h1><?= $title ?></h1>
 
 	<?= $output ?>

@@ -1,4 +1,3 @@
-<a href="editrecipe.php">Add a new Recipe</a>
 <p><?= $totalRecipes ?> total recipes in the database.</p>
 <hr />
 <table border="1">
@@ -17,11 +16,11 @@
 			<td><?= htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') ?></td>
 			<td><?= htmlspecialchars($recipe['description'], ENT_QUOTES, 'UTF-8') ?></td>
 			<td>
-				<form method="post" action="deleterecipe.php">
+				<form method="post" action="index.php?action=delete">
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
 					<button type="submit">Delete</button>
 				</form>
-				<form action="editrecipe.php" method="post">
+				<form action="index.php?action=edit" method="post">
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
 					<button type="submit">Edit</button>
 				</form>
