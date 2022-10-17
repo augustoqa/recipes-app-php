@@ -12,13 +12,9 @@ class RecipeController {
 
 	public function home()
 	{
-		ob_start();
-
-		include __DIR__ . '/../templates/index.html.php';
-
 		return [
-			'title'  => 'Index',
-			'output' => ob_get_clean(),
+			'title'    => 'Index',
+			'template' => 'index.html.php',
 		];
 	}
 
@@ -39,13 +35,13 @@ class RecipeController {
 
 		$totalRecipes = $this->recipesTable->total();
 
-		ob_start();
-
-		include __DIR__ . '/../templates/recipes/recipes.html.php';
-
 		return [
-			'title'  => 'List of Recipes',
-			'output' => ob_get_clean(),
+			'title'     => 'List of Recipes',
+			'template'  => 'recipes/recipes.html.php',
+			'variables' => [
+				'recipes'      => $recipes,
+				'totalRecipes' => $totalRecipes,
+			]
 		];
 	}
 
@@ -59,21 +55,21 @@ class RecipeController {
 			header('location: index.php?action=list') ;
 		} else {
 			$title = 'Add Recipe';
+			$recipe = null;
 
 			if (isset($_POST['id'])) {
 				$recipe = $this->recipesTable->find('id', $_POST['id'])[0];
 				$title = 'Edit Recipe';
 			}
 
-			ob_start();
-
-			include __DIR__ . '/../templates/recipes/editrecipe.html.php';
+			return [
+				'title'     => $title,
+				'template'  => 'recipes/editrecipe.html.php',
+				'variables' => [
+					'recipe'   => $recipe,
+				],
+			];
 		}
-
-		return [
-			'title'  => $title,
-			'output' => ob_get_clean(),
-		];
 	}
 
 	public function delete()
