@@ -22,7 +22,13 @@ try {
 	$recipeController = new RecipeController($recipesTable, $recipeClassesTable);
 
 	$action = $_GET['action'] ?? 'home';
-	$page = $recipeController->$action();
+	if ($action == strtolower($action)) {
+		$page = $recipeController->$action();
+	} else {
+		http_response_code(301);
+		header('location: index.php?action=' . strtolower($action));
+		exit;
+	}
 
 	$title = $page['title'];
 	$variables = $page['variables'] ?? [];
