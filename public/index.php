@@ -15,18 +15,27 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../classes/DatabaseTable.php';
 	include __DIR__ . '/../controllers/RecipeController.php';
+	include __DIR__ . '/../controllers/AuthorController.php';
 
+	$authorTable = new DatabaseTable($pdo, 'authors');
 	$recipesTable = new DatabaseTable($pdo, 'recipes');
 	$recipeClassesTable = new DatabaseTable($pdo, 'recipe_classes');
 
-	$recipeController = new RecipeController($recipesTable, $recipeClassesTable);
 
+	$controllerName = $_GET['controller'] ?? 'recipe';
 	$action = $_GET['action'] ?? 'home';
-	if ($action == strtolower($action)) {
-		$page = $recipeController->$action();
+
+	if ($controllerName === 'recipe') {
+		$controller = new RecipeController($recipesTable, $recipeClassesTable);
+	} else if ($controllerName === 'author') {
+		$controller = new AuthorController($authorTable);
+	}
+
+	if ($controllerName == strtolower($controllerName) && $action == strtolower($action)) {
+		$page = $controller->$action();
 	} else {
 		http_response_code(301);
-		header('location: index.php?action=' . strtolower($action));
+		header('"location: index.php?controller=' . strtolower($controllerName) . '&action=' . strtolower($action));
 		exit;
 	}
 
