@@ -21,9 +21,16 @@ try {
 	$recipesTable = new DatabaseTable($pdo, 'recipes');
 	$recipeClassesTable = new DatabaseTable($pdo, 'recipe_classes');
 
+	$uri = strtok(ltrim($_SERVER['REQUEST_URI'], '/'), '?');
 
-	$controllerName = $_GET['controller'] ?? 'recipe';
-	$action = $_GET['action'] ?? 'home';
+	if ($uri == '') {
+		$uri = 'recipe/home';
+	}
+	
+	$route = explode('/', $uri);
+
+	$controllerName = array_shift($route);
+	$action = array_shift($route);
 
 	if ($controllerName === 'recipe') {
 		$controller = new RecipeController($recipesTable, $recipeClassesTable);
@@ -31,11 +38,11 @@ try {
 		$controller = new AuthorController($authorTable);
 	}
 
-	if ($controllerName == strtolower($controllerName) && $action == strtolower($action)) {
+	if ($uri === strtolower($uri)) {
 		$page = $controller->$action();
 	} else {
 		http_response_code(301);
-		header('"location: index.php?controller=' . strtolower($controllerName) . '&action=' . strtolower($action));
+		header('location: /' . strtolower($uri));
 		exit;
 	}
 

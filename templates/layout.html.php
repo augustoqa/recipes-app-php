@@ -8,8 +8,8 @@
 <body>
 	<nav>
 		<ul>
-			<li><a href="index.php?controller=recipe&amp;action=list">Recipes List</a></li>
-			<li><a href="index.php?controller=recipe&amp;action=edit">Add a new Recipe</a></li>
+			<li><a href="/recipe/list">Recipes List</a></li>
+			<li><a href="/recipe/edit">Add a new Recipe</a></li>
 		</ul>
 	</nav>
 	<h1><?= $title ?></h1>

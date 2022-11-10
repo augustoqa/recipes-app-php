@@ -16,11 +16,11 @@
 			<td><?= htmlspecialchars($recipe['title'], ENT_QUOTES, 'UTF-8') ?></td>
 			<td><?= htmlspecialchars($recipe['description'], ENT_QUOTES, 'UTF-8') ?></td>
 			<td>
-				<form method="post" action="index.php?action=delete">
+				<form method="post" action="/recipe/delete">
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
 					<button type="submit">Delete</button>
 				</form>
-				<form action="index.php?action=edit" method="post">
+				<form action="/recipe/edit" method="post">
 					<input type="hidden" name="id" value="<?= $recipe['id'] ?>">
 					<button type="submit">Edit</button>
 				</form>

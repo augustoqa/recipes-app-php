@@ -52,7 +52,7 @@ class RecipeController {
 			$recipe['recipe_classes_id'] = 1;
 			$this->recipesTable->save($recipe);
 
-			header('location: index.php?action=list') ;
+			header('location: /recipe/list') ;
 		} else {
 			$title = 'Add Recipe';
 			$recipe = null;
@@ -76,6 +76,6 @@ class RecipeController {
 	{
 		$this->recipesTable->delete($_POST['id']);
 
-		header('location: index.php?action=list');
+		header('location: /recipe/list');
 	}
 }
