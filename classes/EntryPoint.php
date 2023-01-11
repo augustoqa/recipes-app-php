@@ -1,6 +1,11 @@
 <?php
 
 class EntryPoint {
+	private $webSite;
+
+	public function __construct($webSite) {
+		$this->webSite = $webSite;
+	}
 
 	public function checkUri($uri)
 	{
@@ -24,31 +29,18 @@ class EntryPoint {
 	public function run($uri)
 	{
 		try {
-			include __DIR__ . '/../includes/DatabaseConnection.php';
-			include __DIR__ . '/../classes/DatabaseTable.php';
-			include __DIR__ . '/../controllers/RecipeController.php';
-			include __DIR__ . '/../controllers/AuthorController.php';
-
-			$authorTable = new DatabaseTable($pdo, 'authors');
-			$recipesTable = new DatabaseTable($pdo, 'recipes');
-			$recipeClassesTable = new DatabaseTable($pdo, 'recipe_classes');
+			if ($uri == '') {
+				$uri = $this->webSite->defaultRoute();
+			}
 
 			$this->checkUri($uri);
-
-			if ($uri == '') {
-				$uri = 'recipe/home';
-			}
 
 			$route = explode('/', $uri);
 
 			$controllerName = array_shift($route);
 			$action = array_shift($route);
 
-			if ($controllerName === 'recipe') {
-				$controller = new RecipeController($recipesTable, $recipeClassesTable);
-			} else if ($controllerName === 'author') {
-				$controller = new AuthorController($authorTable);
-			}
+			$controller = $this->webSite->getController($controllerName);
 
 			$page = $controller->$action(...$route);
 
