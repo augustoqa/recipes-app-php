@@ -9,7 +9,6 @@ class RecipeWeb {
 	public function getController($controllerName)
 	{
 		include __DIR__ . '/../includes/DatabaseConnection.php';
-		include __DIR__ . '/../classes/DatabaseTable.php';
 		include __DIR__ . '/../controllers/RecipeController.php';
 		include __DIR__ . '/../controllers/AuthorController.php';
 

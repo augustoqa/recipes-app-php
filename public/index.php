@@ -1,7 +1,6 @@
 <?php
 
-require __DIR__ . '/../classes/EntryPoint.php';
-require __DIR__ . '/../classes/RecipeWeb.php';
+require __DIR__ . '/../includes/autoload.php';
 
 $uri = strtok(ltrim($_SERVER['REQUEST_URI'], '/'), '?');
 	
