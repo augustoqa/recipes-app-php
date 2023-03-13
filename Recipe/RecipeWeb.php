@@ -1,5 +1,11 @@
 <?php 
 
+namespace Recipe;
+
+use Ninja\DatabaseTable;
+use Recipe\Controllers\RecipeController;
+use Recipe\Controllers\AuthorController;
+
 class RecipeWeb {
 	public function defaultRoute()
 	{
@@ -8,9 +14,8 @@ class RecipeWeb {
 
 	public function getController($controllerName)
 	{
-		include __DIR__ . '/../includes/DatabaseConnection.php';
-		include __DIR__ . '/../controllers/RecipeController.php';
-		include __DIR__ . '/../controllers/AuthorController.php';
+		$pdo = new \PDO('mysql:host=localhost;dbname=recipes;charset=utf8mb4', 'root', '');
+		$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
 		$authorTable = new DatabaseTable($pdo, 'authors');
 		$recipesTable = new DatabaseTable($pdo, 'recipes');

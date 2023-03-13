@@ -1,5 +1,7 @@
 <?php
 
+namespace Recipe\Controllers;
+
 class AuthorController {
 	private DatabaseTable $authorTable;
 

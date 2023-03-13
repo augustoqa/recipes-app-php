@@ -1,5 +1,7 @@
 <?php
 
+namespace Ninja;
+
 class EntryPoint {
 	private $webSite;
 

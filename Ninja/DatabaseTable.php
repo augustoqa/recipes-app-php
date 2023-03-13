@@ -1,11 +1,13 @@
 <?php
 
+namespace Ninja;
+
 class DatabaseTable {
 	private $pdo;
 	private $table;
 	private $primaryKey;
 
-	public function __construct(PDO $pdo, string $table, string $primaryKey = 'id')
+	public function __construct(\PDO $pdo, string $table, string $primaryKey = 'id')
 	{
 		$this->pdo = $pdo;
 		$this->table = $table;
@@ -23,7 +25,7 @@ class DatabaseTable {
 	public function total()
 	{
 		$stmt = $this->query("SELECT COUNT(*) AS `total` FROM `{$this->table}`");
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
 		return $row['total'];
 	}
@@ -35,13 +37,13 @@ class DatabaseTable {
 			[':field' => $value]
 		);
 
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	public function findAll()
 	{
 		$stmt = $this->query("SELECT * FROM `{$this->table}`");
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	public function save(array $record)		
@@ -52,7 +54,7 @@ class DatabaseTable {
 			}
 
 			$this->insert($record);
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			$this->update($record);
 		}
 	}

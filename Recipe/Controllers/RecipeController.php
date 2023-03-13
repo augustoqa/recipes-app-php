@@ -1,5 +1,9 @@
 <?php
 
+namespace Recipe\Controllers;
+
+use Ninja\DatabaseTable;
+
 class RecipeController {
 	private DatabaseTable $recipesTable;
 	private DatabaseTable $recipeClassesTable;
