@@ -1,0 +1,17 @@
+{
+    "name": "csar/recipes",
+    "description": "A recipes web application",
+    "type": "project",
+    "authors": [
+        {
+            "name": "y"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Ninja\\": "Ninja",
+            "Recipe\\": "Recipe"
+        }
+    }
+}
