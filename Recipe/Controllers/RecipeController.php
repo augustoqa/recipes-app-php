@@ -51,29 +51,30 @@ class RecipeController {
 
 	public function edit()
 	{
-		if (isset($_POST['recipe'])) {
-			$recipe = $_POST['recipe'];
-			$recipe['recipe_classes_id'] = 1;
-			$this->recipesTable->save($recipe);
+		$title = 'Add Recipe';
+		$recipe = null;
 
-			header('location: /recipe/list') ;
-		} else {
-			$title = 'Add Recipe';
-			$recipe = null;
-
-			if (isset($_POST['id'])) {
-				$recipe = $this->recipesTable->find('id', $_POST['id'])[0];
-				$title = 'Edit Recipe';
-			}
-
-			return [
-				'title'     => $title,
-				'template'  => 'recipes/editrecipe.html.php',
-				'variables' => [
-					'recipe'   => $recipe,
-				],
-			];
+		if (isset($_POST['id'])) {
+			$recipe = $this->recipesTable->find('id', $_POST['id'])[0];
+			$title = 'Edit Recipe';
 		}
+
+		return [
+			'title'     => $title,
+			'template'  => 'recipes/editrecipe.html.php',
+			'variables' => [
+				'recipe'   => $recipe,
+			],
+		];
+	}
+
+	public function editSubmit()
+	{
+		$recipe = $_POST['recipe'];
+		$recipe['recipe_classes_id'] = 1;
+		$this->recipesTable->save($recipe);
+
+		header('location: /recipe/list') ;
 	}
 
 	public function delete()

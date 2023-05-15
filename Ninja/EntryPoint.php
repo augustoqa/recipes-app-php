@@ -28,7 +28,7 @@ class EntryPoint {
 		return ob_get_clean();
 	}
 
-	public function run($uri)
+	public function run($uri, $requestMethod)
 	{
 		try {
 			if ($uri == '') {
@@ -43,6 +43,10 @@ class EntryPoint {
 			$action = array_shift($route);
 
 			$controller = $this->webSite->getController($controllerName);
+
+			if ($requestMethod === 'POST' && ! isset($_POST['id'])) {
+				$action .= 'Submit';
+			}
 
 			$page = $controller->$action(...$route);
 
