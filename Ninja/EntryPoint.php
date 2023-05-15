@@ -3,9 +3,9 @@
 namespace Ninja;
 
 class EntryPoint {
-	private $webSite;
+	private Website $webSite;
 
-	public function __construct($webSite) {
+	public function __construct(Website $webSite) {
 		$this->webSite = $webSite;
 	}
 
